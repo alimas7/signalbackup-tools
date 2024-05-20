@@ -32,44 +32,10 @@ jobs:
         run: |
           g++ --std=c++2a */*.cc *.cc -o signalbackup-tools -lcrypto -lsqlite3
 
-  do-build-tests-script:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Install dependencies
-        run: |
-          set -x
-          sudo apt-get update
-          sudo apt-get install --yes --no-install-recommends -V g++ libsqlite3-dev libssl-dev
-
-      - name: Build simple script
-        run: |
-          sh BUILDSCRIPT.sh
-
-  do-build-tests-parallel-script:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Install dependencies
-        run: |
-          set -x
-          sudo apt-get update
-          sudo apt-get install --yes --no-install-recommends -V g++ libsqlite3-dev libssl-dev
-
-      - name: Build new script
-        run: |
-          bash BUILDSCRIPT_MULTIPROC.bash44
-          
-  do-build-tests-legacy:
-    runs-on: ubuntu-20.04
-    steps:
-      - uses: actions/checkout@v4
-      - name: Install dependencies
-        run: |
-          set -x
-          sudo apt-get update
-          sudo apt-get install --yes --no-install-recommends -V g++ libsqlite3-dev libssl-dev
-
-      - name: Build new script (legacy)
-        run: |
-          CXXFLAGSEXTRA=-Wno-attributes bash BUILDSCRIPT_MULTIPROC.bash44
+    - name: Step 3 - Use the Upload Artifact GitHub Action
+      uses: actions/upload-artifact@v2
+      with: 
+        name: assets-for-download
+        path: .
+        name: signalbackup-tools
+        path: ./signalbackup-tools
