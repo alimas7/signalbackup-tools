@@ -17,7 +17,6 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  do-build-tests-raw:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
